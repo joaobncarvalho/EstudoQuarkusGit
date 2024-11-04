@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 
 public class CreateUserRequest {
     private Integer id;
-    private String name;
+    private String namee;
     private Integer age;
 
     public String getName() {
