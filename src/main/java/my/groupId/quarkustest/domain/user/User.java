@@ -6,10 +6,13 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity
+@Entity(name = "UserEntity")
 @Table(name = "USERS")
-public class User extends PanacheEntity {
+public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;

@@ -2,12 +2,14 @@ package my.groupId.jongue.rest;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import my.groupId.jongue.rest.dto.CreateUserRequest;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import my.groupId.quarkustest.domain.user.User;
+import my.groupId.quarkustest.repository.UserRepository;
 
 
 @Path("/users")
@@ -16,6 +18,13 @@ import my.groupId.quarkustest.domain.user.User;
 
 public class UserResource {
 
+    private UserRepository repository;
+
+    @Inject
+    public UserResource(UserRepository repository){
+        this.repository = repository;
+    }
+
     @POST
     @Transactional
     public Response createUser(CreateUserRequest userRequest ){
@@ -23,12 +32,12 @@ public class UserResource {
         user.setAge(userRequest.getAge());
         user.setName(userRequest.getName());
 
-        user.persist();
+        repository.persist(user);
         return Response.ok(user).build();
     }
     @GET
     public Response listAllUsers(){
-        PanacheQuery<PanacheEntityBase> query = User.findAll();
+        PanacheQuery<User> query = repository.findAll();
         return Response.ok(query.list()).build();
     }
     
@@ -36,10 +45,10 @@ public class UserResource {
     @Transactional
     @Path("{id}")
     public Response deleteUser(@PathParam("id") Long id){
-        User user = User.findById(id);
+        User user = repository.findById(id);
 
         if(user != null){
-            user.delete();
+            repository.delete(user);
             return Response.ok().build();
         }
 
@@ -50,7 +59,7 @@ public class UserResource {
     @Transactional
     @Path("{id}")
     public Response updateUser(@PathParam("id") Long id, CreateUserRequest userData ){
-        User user = User.findById(id);
+        User user = repository.findById(id);
         if(user != null){
             user.setName(userData.getName());
             user.setAge(userData.getAge());
