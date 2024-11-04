@@ -51,7 +51,9 @@ public class UserResource {
         user.setName(userRequest.getName());
 
         repository.persist(user);
-        return Response.ok(user).build();
+        return Response.status(Response.Status.CREATED.getStatusCode())
+                .entity(user)
+                .build();
     }
     @GET
     public Response listAllUsers(){
