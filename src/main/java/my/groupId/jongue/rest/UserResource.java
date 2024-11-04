@@ -1,6 +1,6 @@
 package my.groupId.jongue.rest;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import my.groupId.quarkustest.domain.user.User;
 import my.groupId.quarkustest.repository.UserRepository;
-import org.hibernate.dialect.function.ListaggGroupConcatEmulation;
+
 
 import java.util.Set;
 
