@@ -11,6 +11,7 @@ import jakarta.ws.rs.*;
 import my.groupId.jongue.rest.dto.CreateUserRequest;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import my.groupId.jongue.rest.dto.ResponseError;
 import my.groupId.quarkustest.domain.user.User;
 import my.groupId.quarkustest.repository.UserRepository;
 
@@ -39,9 +40,10 @@ public class UserResource {
 
         Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(userRequest);
         if(!violations.isEmpty()){
-            ConstraintViolation<CreateUserRequest> erro = violations.stream().findAny().get();
-            String errorMessage = erro.getMessage();
-            return Response.status(400).entity(errorMessage).build();
+
+            ResponseError responseError = ResponseError.createFromValidation(violations);
+
+            return Response.status(400).entity(responseError).build();
         }
 
         User user = new User();
