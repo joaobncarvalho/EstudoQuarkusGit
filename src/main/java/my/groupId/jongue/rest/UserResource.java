@@ -41,9 +41,11 @@ public class UserResource {
         Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(userRequest);
         if(!violations.isEmpty()){
 
-            ResponseError responseError = ResponseError.createFromValidation(violations);
 
-            return Response.status(400).entity(responseError).build();
+
+            return ResponseError
+                    .createFromValidation(violations)
+                    .withStatusCode(ResponseError.UNPROCESSABLE_ENTITY_STATUS);
         }
 
         User user = new User();
@@ -83,7 +85,7 @@ public class UserResource {
         if(user != null){
             user.setName(userData.getName());
             user.setAge(userData.getAge());
-            return Response.ok().build();
+            return Response.noContent().build();
         }
 
 
