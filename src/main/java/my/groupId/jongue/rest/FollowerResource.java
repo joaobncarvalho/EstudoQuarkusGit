@@ -2,6 +2,7 @@ package my.groupId.jongue.rest;
 
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -25,6 +26,7 @@ public class FollowerResource {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     @PUT
     public Response followUser(@PathParam("userId") Long userId, FollowerRequest request){
         var user = userRepository.findById(userId);
@@ -33,6 +35,15 @@ public class FollowerResource {
         }
 
         var follower = userRepository.findById(request.getFollowerId());
+
+        boolean followers = repository.followers(follower, user);
+
+        if(!followers){
+            var entity = new Follower();
+            entity.setUser(user);
+            entity.setFollower(follower);
+        }
+
 
         var entity = new Follower();
         entity.setUser(user);
