@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/my-artifactId-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm -t quarkus-test .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/my-artifactId-jvm
+# docker run -i --rm -p 8080:8080 quarkus-test
 #
 # If you want to include the debug port into your docker image
 # you will have to expose the debug port (default 5005 being the default) like this :  EXPOSE 8080 5005.
@@ -87,8 +87,13 @@ COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=185 target/quarkus-app/*.jar /deployments/
 COPY --chown=185 target/quarkus-app/app/ /deployments/app/
 COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+CMD ["./wait-for-it.sh", "postgres_container:5432", "--", "java", "-jar", "/deployments/quarkus-run.jar"]
 
-EXPOSE 8080
+
+
+EXPOSE 1904
 USER 185
 ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"

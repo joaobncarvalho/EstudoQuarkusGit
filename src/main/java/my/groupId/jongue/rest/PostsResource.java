@@ -1,7 +1,5 @@
 package my.groupId.jongue.rest;
 
-
-
 import io.quarkus.panache.common.Sort;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
