@@ -14,10 +14,7 @@ import my.groupId.quarkustest.domain.user.Posts;
 import my.groupId.quarkustest.domain.user.User;
 import my.groupId.quarkustest.repository.PostRepository;
 import my.groupId.quarkustest.repository.UserRepository;
-import org.jboss.logging.annotations.Pos;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.stream.Collectors;
 
 
