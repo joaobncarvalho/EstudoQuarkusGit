@@ -6,13 +6,7 @@ import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import my.groupId.quarkustest.domain.user.Follower;
 import my.groupId.quarkustest.domain.user.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Parameter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @ApplicationScoped
